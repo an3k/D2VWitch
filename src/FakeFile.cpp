@@ -30,7 +30,7 @@ extern "C" {
 bool FakeFile::open() {
     total_size = 0;
     current_position = 0;
-    current_file = cbegin();
+    current_file = begin();
 
     auto it = begin();
     for ( ; it != end(); it++) {
@@ -146,7 +146,7 @@ int64_t FakeFile::seek(void *opaque, int64_t offset, int whence) {
         ff->current_file--;
         offset_in_current_file = offset - ff->total_size + ff->crbegin()->size;
     } else {
-        for (auto it = ff->cbegin(); it != ff->cend(); it++) {
+        for (auto it = ff->begin(); it != ff->cend(); it++) {
             if (offset_in_current_file < it->size) {
                 ff->current_file = it;
                 break;
