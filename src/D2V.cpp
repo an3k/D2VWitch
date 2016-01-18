@@ -64,7 +64,7 @@ bool D2V::printHeader() {
     header += "DGIndexProjectFile16\n";
     header += std::to_string(fake_file->size()) + "\n";
 
-    for (auto it = fake_file->cbegin(); it != fake_file->cend(); it++)
+    for (auto it = fake_file->begin(); it != fake_file->cend(); it++)
         header += it->name + "\n";
 
     header += "\n";
@@ -164,7 +164,7 @@ bool D2V::printDataLine() {
         return false;
     }
 
-    for (auto it = line.flags.cbegin(); it != line.flags.cend(); it++) {
+    for (auto it = line.flags.begin(); it != line.flags.cend(); it++) {
         if (fprintf(d2v_file, " %x", (int)*it) < 0) {
             error = "Failed to print d2v data line: fprintf() failed.";
             return false;
@@ -221,7 +221,7 @@ bool D2V::handleVideoPacket(AVPacket *packet) {
         flags = FLAGS_B_PICTURE;
 
         int reference_pictures = 0;
-        for (auto it = line.flags.cbegin(); it != line.flags.cend(); it++) {
+        for (auto it = line.flags.begin(); it != line.flags.cend(); it++) {
             uint8_t frame_type = *it & FLAGS_B_PICTURE;
 
             if (frame_type == FLAGS_I_PICTURE || frame_type == FLAGS_P_PICTURE)
